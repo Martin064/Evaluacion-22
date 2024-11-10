@@ -1,0 +1,46 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Generar QR</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Selecciona Asignatura y Sección</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      <!-- Selector de asignatura -->
+      <ion-item>
+        <ion-label>Asignatura</ion-label>
+        <ion-select [(ngModel)]="selectedAsignatura" (ionChange)="onAsignaturaChange()">
+          <ion-select-option *ngFor="let asignatura of asignaturas" [value]="asignatura">
+            {{ asignatura.materia }}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <!-- Selector de sección (solo muestra secciones de la asignatura seleccionada) -->
+      <ion-item *ngIf="selectedAsignatura">
+        <ion-label>Sección</ion-label>
+        <ion-select [(ngModel)]="selectedSeccion">
+          <ion-select-option *ngFor="let seccion of selectedAsignatura.secciones" [value]="seccion">
+            {{ seccion }}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <!-- Botón para generar QR, habilitado solo si se seleccionó una asignatura y sección -->
+      <ion-button expand="full" color="primary" (click)="generarQR()" [disabled]="!selectedAsignatura || !selectedSeccion">
+        Generar QR
+      </ion-button>
+
+      <!-- Mostrar QR generado -->
+      <div *ngIf="qrGenerado" class="qr-container">
+        <qrcode [qrdata]="qrData"></qrcode>
+        <p>{{ qrData }}</p>
+      </div>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

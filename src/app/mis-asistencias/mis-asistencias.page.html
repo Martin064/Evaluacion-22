@@ -1,0 +1,46 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Mis Asistencias</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-item>
+    <ion-label>Selecciona Asignatura</ion-label>
+    <ion-select [(ngModel)]="selectedAsignatura" (ionChange)="cargarAsistencias()">
+      <ion-select-option *ngFor="let asignatura of asignaturas" [value]="asignatura.materia">
+        {{ asignatura.materia }}
+      </ion-select-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-list *ngIf="asistencias.length > 0">
+    <ion-item *ngFor="let asistencia of asistencias">
+      <ion-label>
+        <div *ngIf="userType === 'estudiante'">
+          Fecha: {{ asistencia.fecha }} - Estado: {{ asistencia.estado }}
+        </div>
+        <div *ngIf="userType === 'docente'">
+          Estudiante: {{ asistencia.nombreEstudiante }} - Fecha: {{ asistencia.fecha }} - Estado: {{ asistencia.estado }}
+        </div>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+  <div *ngIf="asistencias.length === 0 && selectedAsignatura">
+    <ion-text color="medium">
+      <p>No hay registros de asistencia para esta asignatura.</p>
+    </ion-text>
+  </div>
+</ion-content>
+<ion-footer>
+  <ion-toolbar>
+    <ion-title>Regresar</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="pag-inicio"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>
+
+
+

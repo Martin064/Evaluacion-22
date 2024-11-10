@@ -1,0 +1,46 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Escanear QR</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <!-- Sección de selección de asignatura -->
+  <ion-item>
+    <ion-label>Asignatura</ion-label>
+    <ion-select [(ngModel)]="selectedAsignatura" (ionChange)="onAsignaturaChange()">
+      <ion-select-option *ngFor="let asignatura of asignaturas" [value]="asignatura">
+        {{ asignatura }}
+      </ion-select-option>
+    </ion-select>
+  </ion-item>
+
+  <!-- Componente de escaneo QR utilizando ngx-scanner-qrcode -->
+  <ngx-scanner-qrcode 
+    (scanSuccess)="onScanSuccess($event)"
+    (scanError)="onScanError($event)">
+  </ngx-scanner-qrcode>
+
+  <!-- Mostrar los datos escaneados -->
+  <div *ngIf="scannedData">
+    <p><strong>Datos escaneados:</strong> {{ scannedData }}</p>
+    <ion-input [(ngModel)]="scannedData" placeholder="Código QR leído" readonly></ion-input>
+  </div>
+
+  <!-- Botón para registrar la asistencia -->
+  <ion-button 
+    expand="full" 
+    (click)="registerAssistance()" 
+    [disabled]="!scannedData || !selectedAsignatura">
+    Registrar Asistencia
+  </ion-button>
+
+  <!-- Listado de asistencias -->
+  <ion-list *ngIf="assistanceList.length > 0">
+    <ion-item *ngFor="let item of assistanceList">
+      <ion-label>
+        {{ item.asignatura }} - {{ item.fecha }}
+      </ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>

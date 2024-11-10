@@ -1,0 +1,48 @@
+{
+  "usuarios": [
+    {
+      "id": "1",
+      "nombreUsuario": "profesor",
+      "clave": "hola",
+      "tipo": "docente",
+      "nombre": "Juan Perez",
+      "materias": [
+        {
+          "materia": "Matematicas",
+          "secciones": [
+            "mat001",
+            "mat002",
+            "mat003"
+          ],
+          "materiaActual": "Matematicas",
+          "seccionActual": "mat001"
+        }
+      ]
+    },
+    {
+      "id": "2",
+      "nombreUsuario": "estudiante",
+      "clave": "OtraClave",
+      "tipo": "estudiante",
+      "nombre": "Carlos Silva",
+      "materias": [
+        {
+          "materia": "Matematicas",
+          "secciones": [
+            "mat001"
+          ]
+        }
+      ]
+    }
+  ],
+  "asistencias": [
+    {
+      "idEstudiante": "2",
+      "nombreEstudiante":"Carlos Silva",
+      "idMateria": "Matematicas",
+      "fecha": "2024-11-06",
+      "estado": "presente",
+      "id": "6e0d"
+    }
+  ]
+}
