@@ -15,10 +15,21 @@
     </ion-select>
   </ion-item>
 
+  <!-- Botón único para activar la cámara y registrar la asistencia -->
+  <ion-button expand="full" (click)="handleButtonClick()" [disabled]="isCameraActive || !selectedAsignatura">
+    {{ isCameraActive ? 'Registrar Asistencia' : 'Activar Cámara' }}
+  </ion-button>
+
+  <!-- Elemento de video para mostrar el flujo de la cámara -->
+  <div class="camera-container" *ngIf="isCameraActive">
+    <video #videoElement width="100%" height="auto" autoplay></video>
+  </div>
+
   <!-- Componente de escaneo QR utilizando ngx-scanner-qrcode -->
   <ngx-scanner-qrcode 
     (scanSuccess)="onScanSuccess($event)"
-    (scanError)="onScanError($event)">
+    (scanError)="onScanError($event)"
+    *ngIf="isCameraActive">
   </ngx-scanner-qrcode>
 
   <!-- Mostrar los datos escaneados -->
@@ -26,14 +37,6 @@
     <p><strong>Datos escaneados:</strong> {{ scannedData }}</p>
     <ion-input [(ngModel)]="scannedData" placeholder="Código QR leído" readonly></ion-input>
   </div>
-
-  <!-- Botón para registrar la asistencia -->
-  <ion-button 
-    expand="full" 
-    (click)="registerAssistance()" 
-    [disabled]="!scannedData || !selectedAsignatura">
-    Registrar Asistencia
-  </ion-button>
 
   <!-- Listado de asistencias -->
   <ion-list *ngIf="assistanceList.length > 0">
